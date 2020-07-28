@@ -8,7 +8,25 @@ public class Dto implements Serializable {
 	private String typeOfUser;
 	private String info;
 	private int id;
+	private int resultGame; 
+	private int idGame;
 	
+	public int getIdGame() {
+		return idGame;
+	}
+
+	public void setIdGame(int idGame) {
+		this.idGame = idGame;
+	}
+
+	public int getResultGame() {
+		return resultGame;
+	}
+
+	public void setResultGame(int resultGame) {
+		this.resultGame = resultGame;
+	}
+
 	public int getId() {
 		return id;
 	}
