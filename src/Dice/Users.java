@@ -7,7 +7,14 @@ import java.util.Scanner;
 public class Users implements IFunction {
 
 	Dto dto = new Dto();
- 
+	
+	private String[] functionAdmin = {"Update info user","Delete game","Get money","Change password","input money","Exit"};
+	
+	private String[] functionUser = {"Play game","Show profile","Change password","Get money","input money","History game","Exit"};
+	
+	private int[] left = {1,2,3,4,5};
+	
+	
 	Scanner sc = new Scanner(System.in);
 	@Override
 	public Dto login(String Name, String Password, Dao dao) {

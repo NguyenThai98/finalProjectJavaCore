@@ -4,13 +4,6 @@ import java.util.List;
 
 public interface IFunction {
 	
-	String[] functionAdmin = {"Update info user","Delete game","Get money","Change password","input money","Exit"};
-	
-	String[] functionUser = {"Play game","Show profile","Change password","Get money","input money","History game","Exit"};
-	
-	int[] left = {1,2,3,4,5};
-	
-	int[] right = {6,7,8,9,10};
 	
 	Dto login(String Name, String Password, Dao dao);
 	

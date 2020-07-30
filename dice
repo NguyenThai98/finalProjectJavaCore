@@ -1,0 +1,80 @@
+-- --------------------------------------------------------
+-- Host:                         127.0.0.1
+-- Server version:               10.5.4-MariaDB - mariadb.org binary distribution
+-- Server OS:                    Win64
+-- HeidiSQL Version:             11.0.0.5919
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+
+-- Dumping database structure for dice
+CREATE DATABASE IF NOT EXISTS `dice` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `dice`;
+
+-- Dumping structure for table dice.game
+CREATE TABLE IF NOT EXISTS `game` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `time` varchar(50) NOT NULL DEFAULT '0',
+  `result` varchar(50) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table dice.game: ~3 rows (approximately)
+/*!40000 ALTER TABLE `game` DISABLE KEYS */;
+/*!40000 ALTER TABLE `game` ENABLE KEYS */;
+
+-- Dumping structure for table dice.historygame
+CREATE TABLE IF NOT EXISTS `historygame` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `IDGAME` int(11) NOT NULL DEFAULT 0,
+  `USERID` int(10) NOT NULL DEFAULT 0,
+  `RESULT` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_historygame_users` (`USERID`),
+  KEY `FK_historygame_game` (`IDGAME`),
+  CONSTRAINT `FK_historygame_game` FOREIGN KEY (`IDGAME`) REFERENCES `game` (`id`),
+  CONSTRAINT `FK_historygame_users` FOREIGN KEY (`USERID`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table dice.historygame: ~3 rows (approximately)
+/*!40000 ALTER TABLE `historygame` DISABLE KEYS */;
+/*!40000 ALTER TABLE `historygame` ENABLE KEYS */;
+
+-- Dumping structure for table dice.users
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `NAME` varchar(50) DEFAULT NULL,
+  `PASSWORD` varchar(100) DEFAULT NULL,
+  `MONEY` int(11) DEFAULT NULL,
+  `typeOfUser` varchar(50) DEFAULT NULL,
+  `info` varchar(1000) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table dice.users: ~14 rows (approximately)
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` (`id`, `NAME`, `PASSWORD`, `MONEY`, `typeOfUser`, `info`) VALUES
+	(1, 'admin', 'admin', 546400, '0', 'da test xong'),
+	(2, 'thaicc', '123', 4200, '1', 'sang som thu 6 '),
+	(3, 'thaiz', '123', NULL, '1', 'Thich Tien'),
+	(4, 'thaiy', '123', 123, '1', 'Thich An'),
+	(5, 'thaizzz', '123', 20000, '1', 'Thich Kim Cuong'),
+	(6, 'thinhcc', '123', 20300, '1', 'Thich Nho'),
+	(7, 'aaaa', '123', 200000, '1', 'Thich Vang'),
+	(8, 'thaiccc', '123', 2000, '1', 'Thich Dam'),
+	(9, 'thaiqq', '123', 20000, '1', 'Thich Yeu'),
+	(10, 'toancc', '123', 30000, '1', 'Thich Om'),
+	(11, 'thainguyen', '123', 3000, '1', NULL),
+	(12, 'thaiss', '123', 4000, '1', 'thich an ngot'),
+	(13, 'thong', 'thong', 300, '1', 'thong coder'),
+	(14, 'quang', '123', 59900, '1', 'quang cc');
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
