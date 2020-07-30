@@ -28,7 +28,7 @@ public class Dao {
 			ptmt = connection.prepareStatement(queryString);
 			ptmt.setInt(1, id);
 			ptmt.executeUpdate();
-			System.out.print("Delete game success !!!");
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
@@ -587,6 +587,46 @@ public class Dao {
 			}
 		}
 		 
+	}
+	
+	public List<Integer> allIDGame () {
+		List<Integer> listIdGame = new ArrayList<>();
+		try {
+			
+			String queryString = "SELECT id FROM game";
+			connection = getConnection();
+			
+			ptmt = connection.prepareStatement(queryString);
+
+			resultSet = ptmt.executeQuery();
+			
+//			List<Dto> dtoList = new ArrayList<Dto>();
+			while(resultSet.next()) {
+				listIdGame.add(resultSet.getInt("id"));		 
+			}
+			
+			return listIdGame;
+			 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(resultSet != null) {
+					resultSet.close();
+				}
+				if(connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		 
+		 return listIdGame; 
 	}
 	
 	

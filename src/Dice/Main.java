@@ -2,13 +2,16 @@ package Dice;
  
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
 	static Scanner sc = new Scanner(System.in);
 	
 	public static void main(String[] args) {
+		// method 로 분리하세요 ~ ~ ~ ~ ~ ~ ~ ~ ~ 
 		boolean cfAcount = false;
 		String isCheckAcount;
 		String Name;
@@ -16,6 +19,7 @@ public class Main {
 		String Money;
 		String info;
 		String bet;
+		int eachAll = -1;
 		boolean isPlayGame = true;
 		int betMoney = 0;
 		int inputMoney = 0;
@@ -27,7 +31,8 @@ public class Main {
 		boolean checkNumber = false,checkMoney = false,checkBet = false,continu = false,checkNumberMoney = false;
 		String ContentInfo;
 		
-		
+ 
+		List<Integer> allIdGame = new ArrayList<>();
 		
 		Dto dto = new Dto();
 		
@@ -39,6 +44,8 @@ public class Main {
 		
 		
 		admin = dao.findUser("admin", "admin");
+		
+		
 		do {
 			System.out.print("Do you have account? y / n: ");
 			isCheckAcount = sc.next();
@@ -175,23 +182,47 @@ public class Main {
 					 System.out.println("-------------------List history game-------------------");
 					 user.showHistory(dao);
 					 System.out.println("-------------------End history game-------------------");
-					 checkNumber = false;
-					 while(checkNumber == false ) {
-						 System.out.print("Which game id would you like to delete: ");
-							if(sc.hasNextInt()) {
-								idGame = sc.nextInt();
-								checkNumber = true;
-							}else {
-								System.out.println("Do you understand number id ?");
-								sc.next();
-								checkNumber = false;
-							}
-						}
-					 user.delHistoryGame(idGame, dao);
-					 user.delGame(idGame, dao);
-					 cfAcount = true;
-					 checkNumber = false;
-					  
+					 
+					 allIdGame = user.allIDgame(dao);
+					 if(allIdGame.size() > 0) {
+						 System.out.println("You want to delete each game or all: 1.each game / 2.all game");
+						 System.out.print("Choose the number: "  );
+						 eachAll = sc.nextInt();
+						 
+						 if(eachAll == 1) {
+							 checkNumber = false;
+							 while(checkNumber == false ) {
+								 System.out.print("Which game id would you like to delete: ");
+									if(sc.hasNextInt()) {
+										idGame = sc.nextInt();
+										checkNumber = true;
+									}else {
+										System.out.println("Do you understand number id ?");
+										sc.next();
+										checkNumber = false;
+									}
+								}
+							 user.delHistoryGame(idGame, dao);
+							 user.delGame(idGame, dao);
+							 System.out.print("Delete game success !!!");
+							 cfAcount = true;
+							 checkNumber = false;
+							 
+						 }else {
+							 for (int i = 0; i < allIdGame.size(); i++) {
+								 user.delHistoryGame(allIdGame.get(i), dao);
+								 user.delGame(allIdGame.get(i), dao);
+							 }
+							 System.out.println("Delete all game success!!!!");
+							 cfAcount = true;
+							 checkNumber = false;
+						 }		
+					 }else {
+						 System.out.println("no Game!!!");
+						 cfAcount = true;
+						 checkNumber = false;
+					 }
+					 			  
 				}else if(orderNumber == 3) {
 					 System.out.print("input String new password: ");
 					 Pw = sc.next();
@@ -296,7 +327,6 @@ public class Main {
 						try {
 							thread.join();
 						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 						if(user.checkBet(playGame.dto.getResultGame()) == true) {
@@ -350,7 +380,6 @@ public class Main {
 							 
 						}
 					}
-					
 					continu = false;
 					
 				}else if(orderNumber == 1) {
@@ -370,8 +399,9 @@ public class Main {
 						if(sc.hasNextInt()) {
 							getMoney = sc.nextInt();
 							if(getMoney > Integer.valueOf(dto.getMONEY())) {
-								System.out.println("getMoney < totalMoneyUser please input money");
-								checkMoney = false;
+								System.out.println("Your money is gone... please input money");
+								checkMoney = true;
+								continu = false;
 							}else {
 								int rsMoney = Integer.valueOf(dto.getMONEY()) - user.getMoney(dto.getId(), Integer.valueOf(dto.getMONEY()), getMoney, dao);
 								

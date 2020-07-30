@@ -1,5 +1,7 @@
 package Dice;
 
+import java.util.List;
+
 public interface IFunction {
 	
 	String[] functionAdmin = {"Update info user","Delete game","Get money","Change password","input money","Exit"};
@@ -33,6 +35,8 @@ public interface IFunction {
 	void InsertGame(String time,String rs,Dao dao);
 	
 	int selectIdNewGame(Dao dao);
+	
+	List<Integer> allIDgame(Dao dao);
 	
 	void InserthHistoryGame(int idGame,int idUser,String rs,Dao dao);
 }

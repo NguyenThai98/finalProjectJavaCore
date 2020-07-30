@@ -2,6 +2,7 @@ package Dice;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 public class Users implements IFunction {
 
@@ -84,7 +85,7 @@ public class Users implements IFunction {
 		try {
 
 			int code = (int) Math.floor(((Math.random() * 899999) + 100000));
-			FileWriter obj = new FileWriter("D:\\NTThai\\KITS-03\\JAVA\\Dice\\fileBill\\" + name+ "-" + code + ".txt");
+			FileWriter obj = new FileWriter("D:\\NTThai\\KITS-03\\JAVA\\13.NguyenTrongThai\\fileBill\\" + name+ "-" + code + ".txt");
 			obj.write("YourName " + name + ": " + "You have withdrawn money: " + getMoney + "VND" + " time: " + new Date());
 			obj.close();
 			System.out.print("You have withdrawn money: "+ getMoney + " please take bill in fileBill... \n");
@@ -189,6 +190,14 @@ public class Users implements IFunction {
 	public int selectIdNewGame(Dao dao) {
 		// TODO Auto-generated method stub
 		return dao.selectIdNewGame();
+	}
+
+
+
+	@Override
+	public List<Integer> allIDgame(Dao dao) {
+		// TODO Auto-generated method stub
+		return dao.allIDGame();
 	}
  
 	
